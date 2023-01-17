@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 	"math/big"
 
@@ -254,7 +255,11 @@ func (e *EngineImpl) NewPayloadV1(ctx context.Context, payload *ExecutionPayload
 		log.Error("EXTERNAL CONSENSUS LAYER IS NOT ENABLED, PLEASE RESTART WITH FLAG --externalcl")
 		return nil, fmt.Errorf("engine api should not be used, restart with --externalcl")
 	}
-	log.Debug("Received NewPayloadV1", "height", uint64(payload.BlockNumber), "hash", payload.BlockHash)
+	js, err := json.Marshal(payload)
+	if err != nil {
+		panic(err)
+	}
+	log.Info("Received NewPayloadV1", "json", string(js))
 
 	var baseFee *uint256.Int
 	if payload.BaseFeePerGas != nil {
@@ -301,7 +306,11 @@ func (e *EngineImpl) NewPayloadV2(ctx context.Context, payload *ExecutionPayload
 		log.Error("EXTERNAL CONSENSUS LAYER IS NOT ENABLED, PLEASE RESTART WITH FLAG --externalcl")
 		return nil, fmt.Errorf("engine api should not be used, restart with --externalcl")
 	}
-	log.Debug("Received NewPayloadV2", "height", uint64(payload.BlockNumber), "hash", payload.BlockHash)
+	js, err := json.Marshal(payload)
+	if err != nil {
+		panic(err)
+	}
+	log.Info("Received NewPayloadV2", "json", string(js))
 
 	var baseFee *uint256.Int
 	if payload.BaseFeePerGas != nil {
