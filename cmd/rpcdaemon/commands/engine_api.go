@@ -3,6 +3,7 @@ package commands
 import (
 	"context"
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 	"math/big"
 
@@ -206,7 +207,12 @@ func (e *EngineImpl) newPayload(version uint32, ctx context.Context, payload *Ex
 		log.Error("EXTERNAL CONSENSUS LAYER IS NOT ENABLED, PLEASE RESTART WITH FLAG --externalcl")
 		return nil, fmt.Errorf("engine api should not be used, restart with --externalcl")
 	}
-	log.Debug("Received NewPayload", "version", version, "height", uint64(payload.BlockNumber), "hash", payload.BlockHash)
+
+	js, err := json.Marshal(payload)
+	if err != nil {
+		panic(err)
+	}
+	log.Info("Received NewPayload", "version", version, "json", string(js))
 
 	baseFee, overflow := uint256.FromBig((*big.Int)(payload.BaseFeePerGas))
 	if overflow {
