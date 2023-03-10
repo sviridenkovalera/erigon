@@ -148,6 +148,8 @@ var (
 
 	ChiadoChainConfig = readChainSpec("chainspecs/chiado.json")
 
+	GnosisWithdrawalsDevnet1Config = readChainSpec("chainspecs/gnosis_withdrawals_devnet_1.json")
+
 	CliqueSnapshot = NewSnapshotConfig(10, 1024, 16384, true, "")
 
 	TestChainConfig = &chain.Config{
@@ -236,6 +238,8 @@ func ChainConfigByChainName(chain string) *chain.Config {
 		return GnosisChainConfig
 	case networkname.ChiadoChainName:
 		return ChiadoChainConfig
+	case networkname.GnosisWithdrawalsDevnet1Name:
+		return GnosisWithdrawalsDevnet1Config
 	default:
 		return nil
 	}

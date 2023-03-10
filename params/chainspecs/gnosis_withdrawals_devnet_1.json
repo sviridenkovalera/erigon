@@ -1,0 +1,25 @@
+{
+  "ChainName": "gnosis_withdrawals_devnet_1",
+  "chainId": 10202,
+  "consensus": "aura",
+  "homesteadBlock": 0,
+  "eip150Block": 0,
+  "eip155Block": 0,
+  "byzantiumBlock": 0,
+  "constantinopleBlock": 0,
+  "petersburgBlock": 0,
+  "istanbulBlock": 0,
+  "posdaoBlock": 0,
+  "berlinBlock": 0,
+  "londonBlock": 0,
+  "eip1559FeeCollectorTransition": 0,
+  "eip1559FeeCollector": "0x1559000000000000000000000000000000000000",
+  "terminalTotalDifficulty": 1629952537551295239989564369598169732874240,
+  "terminalTotalDifficultyPassed": true,
+  "shaghaiTime": 1678226400,
+  "aura": {
+    "DBPath": "",
+    "InMemory": false,
+    "Etherbase": "0x0000000000000000000000000000000000000000"
+  }
+}
