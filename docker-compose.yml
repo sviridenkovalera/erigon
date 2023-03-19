@@ -31,7 +31,7 @@ services:
         GID: ${DOCKER_GID:-1000}
       context: .
     command: |
-      ${ERIGON_FLAGS-} --private.api.addr=0.0.0.0:9090
+      ${ERIGON_FLAGS-} --chain=bsc --private.api.addr=0.0.0.0:9090
       --sentry.api.addr=sentry:9091 --downloader.api.addr=downloader:9093 --txpool.disable
       --metrics --metrics.addr=0.0.0.0 --metrics.port=6060 --pprof --pprof.addr=0.0.0.0 --pprof.port=6061
       --authrpc.jwtsecret=/home/erigon/.local/share/erigon/jwt.hex --datadir=/home/erigon/.local/share/erigon
@@ -65,7 +65,7 @@ services:
     command: |
       ${RPCDAEMON_FLAGS-} --http.addr=0.0.0.0 --http.vhosts=* --http.corsdomain=* --ws
       --private.api.addr=erigon:9090 --txpool.api.addr=txpool:9094 --datadir=/home/erigon/.local/share/erigon
-    ports: [ "8545:8545" ]
+    ports: [ "127.0.0.1:8545:8545" ]
 
 
 
@@ -74,7 +74,7 @@ services:
     image: prom/prometheus:v2.42.0
     user: ${DOCKER_UID:-1000}:${DOCKER_GID:-1000} # Uses erigon user from Dockerfile
     command: --log.level=warn --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus --storage.tsdb.retention.time=150d --web.console.libraries=/usr/share/prometheus/console_libraries --web.console.templates=/usr/share/prometheus/consoles
-    ports: [ "9090:9090" ]
+    ports: [ "127.0.0.1:9090:9090" ]
     volumes:
       - ${ERIGON_PROMETHEUS_CONFIG:-./cmd/prometheus/prometheus.yml}:/etc/prometheus/prometheus.yml
       - ${XDG_DATA_HOME:-~/.local/share}/erigon-prometheus:/prometheus
@@ -83,7 +83,7 @@ services:
   grafana:
     image: grafana/grafana:9.3.6
     user: "472:0" # required for grafana version >= 7.3
-    ports: [ "3000:3000" ]
+    ports: [ "127.0.0.1:3000:3000" ]
     volumes:
       - ${ERIGON_GRAFANA_CONFIG:-./cmd/prometheus/grafana.ini}:/etc/grafana/grafana.ini
       - ./cmd/prometheus/datasources:/etc/grafana/provisioning/datasources
